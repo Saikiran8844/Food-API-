@@ -31,7 +31,7 @@ public class SwaggerConfig {
 	 * Instance of {@link BuildProperties}.
 	 */
 	@Autowired
-	private BuildProperties buildProperties;
+	protected BuildProperties buildProperties;
 	// -----------------------------------------------------------------------------------------------------------------
 	/**
 	 * Bean for configure Swagger. 
@@ -43,19 +43,25 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)  
 	            .apiInfo(metaData())    
 	            .select()    
-	            .apis(RequestHandlerSelectors.basePackage("com.food"))    
+	            .apis(RequestHandlerSelectors.basePackage("com.food.api.controller"))    
 	            .build();
 	}
 	
+	@Bean
+	public UiConfiguration uiConfig() {
+	    return UiConfigurationBuilder
+	            .builder().operationsSorter(OperationsSorter.METHOD)
+	            .build();
+	}
 	// -----------------------------------------------------------------------------------------------------------------
 	/**
 	 * Local method to add meta-data on Swagger UI page.
 	 * 
 	 * @return
 	 */
-	private ApiInfo metaData(){
+	protected ApiInfo metaData(){
         return new ApiInfoBuilder()
-                .title("Url shortener API")
+                .title("Food API")
                 .description("API reference for developers")
                 .version("1.0")
                 .build();
